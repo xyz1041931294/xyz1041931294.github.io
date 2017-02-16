@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--<style>
+			ul{list-style: none;}
+			#list ul{display: none;}
+		</style>-->
+        <style>
+			#oUl li ul{
+				display: none;
+			}
+			#oUl li ul.show{
+				display: block;
+			}
+			#oUl li ul.hide{
+				display: none;
+			}
+			#oUl li h3 span{
+				padding: 0px 10px;
+			}
+			#oUl li h3.padL{
+				padding-left: 30px;
+			}
+			li{
+				list-style: none;
+			}
+		</style>
+
+	</head>
+	<body>
+		<ul id="oUl"></ul>
+
+		<!--<ul id="list">
+			<li>
+				<h2>+第一级</h2>
+				<ul>
+					<li>
+						<h2>+第二级</h2>
+						<ul>
+							<li>
+								<h2>+第三级</h2>
+								<ul>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<h2>第三级</h2>
+							</li>
+							<li>
+								<h2>第三级</h2>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<h2>+第二级</h2>
+						<ul>
+							<li>
+								<h2>+第三级</h2>
+								<ul>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<h2>第三级</h2>
+							</li>
+							<li>
+								<h2>第三级</h2>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<h2>第二级</h2>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h2>+第一级</h2>
+				<ul>
+					<li>
+						<h2>+第二级</h2>
+						<ul>
+							<li>
+								<h2>+第三级</h2>
+								<ul>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<h2>第三级</h2>
+							</li>
+							<li>
+								<h2>第三级</h2>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<h2>第二级</h2>
+					</li>
+					<li>
+						<h2>第二级</h2>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h2>+第一级</h2>
+				<ul>
+					<li>
+						<h2>+第二级</h2>
+						<ul>
+							<li>
+								<h2>+第三级</h2>
+								<ul>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<h2>+第三级</h2>
+								<ul>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<h2>第三级</h2>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<h2>第二级</h2>
+					</li>
+					<li>
+						<h2>第二级</h2>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h2>+第一级</h2>
+				<ul>
+					<li>
+						<h2>+第二级</h2>
+						<ul>
+							<li>
+								<h2>+第三级</h2>
+								<ul>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<h2>+第三级</h2>
+								<ul>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+									<li>
+										<h2>第四级</h2>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<h2>第三级</h2>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<h2>第二级</h2>
+					</li>
+					<li>
+						<h2>第二级</h2>
+					</li>
+				</ul>
+			</li>
+		</ul>-->
+        <script>
+        	var arr = [
+				{
+				    title : "第一级菜单",
+				    child : [
+				    	{title:"第二集菜单"},
+				        {title:"第二集菜单",
+				        child:[
+				        		{title:"第三集菜单"},
+				        		{title:"第三集菜单",
+				        		child:[
+				        			{title:"第四集菜单"},
+				        			{title:"第四集菜单"},
+				        			{title:"第四集菜单"}
+				        		]
+				        		},
+				        		{title:"第三集菜单"}
+				        	]
+				    	},
+				        {
+				        	title:"第二集菜单",
+				        	child:[
+				        		{title:"第三集菜单"},
+				        		{title:"第三集菜单"}
+				        	]
+				        }
+				    ]
+				},
+				{
+				    title : "第一级菜单",
+				    child : [
+				    	{title:"第二集菜单"},
+				        {title:"第二集菜单",
+				        child:[
+				        		{title:"第三集菜单"},
+				        		{title:"第三集菜单",
+				        		child:[
+				        			{title:"第四集菜单"},
+				        			{title:"第四集菜单"},
+				        			{title:"第四集菜单"}
+				        		]
+				        		},
+				        		{title:"第三集菜单"}
+				        	]
+				    	},
+				        {
+				        	title:"第二集菜单",
+				        	child:[
+				        		{title:"第三集菜单"},
+				        		{title:"第三集菜单"}
+				        	]
+				        }
+				    ]
+				},
+				{
+					title:"第一集菜单",
+					child:[
+						{title:"第二集菜单"},
+						{title:"第二集菜单"}
+					]
+				},
+				];
+				
+				var 
+				
+//      	var h2s = document.getElementsByTagName('h2');
+//			for(var i=0;i<h2s.length;i++){
+//				h2s[i].onOff = true;
+//				h2s[i].onclick = function(){
+//					var next = this.nextElementSibling;
+//					//先获取h2下边的兄弟元素节点（ul）,如果有才有展开收缩，如果没有就不存在展开收缩，所以先判断有没有ul
+//					if(next){
+//						//判断展开收缩状态
+//						if(this.onOff){
+//							//展开
+//							next.style.display = 'block';
+//							this.onOff = false;
+//						}else{
+//							//收缩
+//							close(next);
+//						}
+//					}
+//				}
+//			}
+//			function close(obj){
+//				obj.style.display = '';
+//				obj.previousElementSibling.onOff = true;
+//				var lis = obj.children;
+//				for(var i=0;i<lis.length;i++){
+//					var child = lis[i].children;
+//					if(child.length==2){
+//						close(child[1])
+//					}	
+//				}
+//			}
+        </script>
+	</body>
+</html>
