@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#content {
+				padding: 20px;
+			}
+			#content div{
+				width: 59px;
+				height: 51px;
+				padding: 20px;
+				margin-bottom: 10px;
+				background: url(img/folder.png) no-repeat center;
+				position: relative;
+				float: left;
+			}
+			#content div.active{
+				background: url(img/folder.png) #e0f0f0 no-repeat center;
+			}
+			#content div input{
+				position: absolute;
+				left: 0;
+				top: 0;
+				display: none;
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				//eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('2 a=4.7("i");2 b=4.w("k");a[0].e=3(){2 c=4.j(\'6\');2 d=4.j("i");d.p(\'r\',\'o\');c.8(d);b.8(c);c.q=3(){f.5=\'n\';d.9.h=\'m\'};c.l=3(){g(d.x){y};f.5=\'\';d.9.h=\'v\'}};a[1].e=3(){2 c=b.7(\'6\');s(2 d=0;d<c.t;d++){g(c[d].5){b.u(c[d])}}}',35,35,'||var|function|document|className|div|querySelectorAll|appendChild|style|||||onclick|this|if|display|input|createElement|content|onmouseout|block|active|checkbox|setAttribute|onmouseover|type|for|length|removeChild|none|getElementById|checked|return'.split('|'),0,{}))	
+			var inps = document.getElementsByTagName('input');
+			var content = document.getElementById('content');
+			var checks = content.getElementsByTagName('input');
+			var divs = content.getElementsByTagName('div');
+			//新建
+			inps[0].onclick = function(){
+				var div = document.createElement('div');
+				var inp = document.createElement('input');
+				inp.type = 'checkbox';
+				div.onmouseover = function(){
+					if(!inp.checked){
+						this.className = 'active';
+						inp.style.display = 'block';
+					}
+				}
+				div.onmouseout = function(){
+					if(!inp.checked){
+						this.className = '';
+						inp.style.display = '';
+					}
+				}
+				div.appendChild(inp);
+				content.appendChild(div);
+			}
+			//删除
+			inps[1].onclick = function(){
+//				for(var i=0;i<checks.length;i++){
+//					if(checks[i].checked){
+//						//console.log(i)
+//						content.removeChild(divs[i]);
+//						//当连续选中的时候，123连续3个被选中，1被删除，后面的往前进一位，i++了，所以跳过少判断一个
+//						i--;
+//					}
+//				}
+			var checks2 = content.querySelectorAll('input');
+				for(var i=0;i<checks2.length;i++){
+					if(checks2[i].checked){
+						content.removeChild(checks2[i].parentNode);
+					}
+				}
+				console.log(checks2)
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<input type="button" id="" value="新建文件夹" />
+		<input type="button" id="" value="删除选中文件夹" />
+		<div id="content">
+		</div>
+	</body>
+</html>
