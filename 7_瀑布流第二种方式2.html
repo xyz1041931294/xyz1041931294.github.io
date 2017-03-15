@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      .pic{
+        width: 236px;
+        box-shadow:0 1px 3px rgba(0,0,0,.3);
+        overflow:hidden;
+        /*margin-top:10px;*/
+      }
+      img{
+        width:236px;
+        border: none;
+        display: block;
+      }
+      ul{
+        list-style: none;
+        margin: 0 auto;
+        position: relative;
+        /*width:994px;*/
+      }
+      li{
+        transition: .5s;
+        position: absolute;
+        /*float:left;*/
+        /*margin-left: 10px;*/
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="ul">
+        <!-- <li class="pic">
+          <img src="http:\/\/www.wookmark.com\/images\/original\/638518_wookmark.jpg">
+        </li> -->
+    </ul>
+  
+  <script src="jquery-3.1.1.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    const w = 236; //一个盒子的宽度
+    let num = 0;//每次需要加载的50条数据的变量
+    let clientW = $(window).innerWidth(); //可视区的宽度
+    const iSpace = 10; //间距
+    let len =  Math.floor((clientW+iSpace) / (iSpace+w));//一个屏幕能容纳多少个图片
+    let arrL = [];//计算left的数组
+    let arrT = [];//计算top的数组
+    let onOff = true;
+    
+    //ul的宽度 = 一个页面有几个li * 一个li的实际宽度
+    $('#ul').css({width:len*(w+iSpace)});
+    
+    /*
+      初始化的top，left值
+    */
+    for(var i=0;i<len;i++){
+      arrL.push(i*246);  //[0,246,492..]
+      arrT.push(0);//[0,0,0...]
+    }
+    scroll();
+    
+    $(window).scroll(function(){
+      let Index = maxIndex();
+      if(arrT[Index] < $(window).innerHeight()+$(window).scrollTop()){
+        if(onOff){
+          onOff = false;
+          num++;
+          scroll();
+        }
+      }
+    });
+    
+    $(window).resize(function(){
+      clientW = $(window).innerWidth(); //当前可视区的宽度
+      len =  Math.floor((clientW+iSpace) / (iSpace+w));//一个屏幕能容纳多少个图片
+      len = len > 7 ? 7 : len;//限制最大的个数
+      arrL.length = 0;//计算left的数组
+      arrT.length = 0;//计算top的数组
+      for(var i=0;i<len;i++){
+        arrL.push(i*246);  //[0,246,492..]
+        arrT.push(0);//[0,0,0...]
+      }
+      //ul的宽度 = 一个页面有几个li * 一个li的实际宽度
+      $('#ul').css({width:len*(w+iSpace)});
+      // console.log(arrL)
+      let $lis = $('li');
+      $lis.each((index,ele)=>{
+        let Index = maxIndex();
+        $(ele).css({
+          left:arrL[Index],
+          top:arrT[Index]
+        });
+        arrT[Index] += ($(ele).height() + 10);
+      });
+    });
+
+    function scroll(){
+      $.ajax({
+        dataType:'jsonp',
+        url:'http://www.wookmark.com/api/json/popular?callback=?',
+        data:'page=' + num,
+        success:function(data){
+          //循环本次请求过来的数据
+          $.each(data,(index,ele)=>{
+              //H为了重新计算top数组中的值（目的为了每次都能得到最小的高度）
+              let H = Math.floor(ele.height * (w/ele.width));
+              //创建img
+              const $img = $(`<img src="${ele.preview}" height="${H}">`)
+              //当img加载成功的时候
+              $img[0].onload = function(){
+                //找到top值最小的位置
+                let Index = maxIndex();
+                //找到之后就能设置li的位置
+                const $li = $(`<li class="pic" style="top:${arrT[Index]}px;left:${arrL[Index]}px;"></li>`);
+                $li.append($img);
+                $('#ul').append($li);
+                // console.log(arrT);
+                // 将最小的数字 += 当前图片的高度 [0,2] -> [100,2] ->[100,102]
+                arrT[Index] += (H+10);//为了下次方便重新找到最小的数字,加10是高度的间距
+                // console.log(arrT);
+              };
+          });
+          onOff = true;
+        }
+      });
+    }
+    
+    function maxIndex(){
+      let maxNum = Infinity;
+      let num = 0;
+      for(let i = 0 ; i < arrT.length ;i++){
+        if(arrT[i] < maxNum){
+          maxNum = arrT[i];
+          num = i;
+        }
+      }
+      return num;
+    }
+    
+    
+    console.log(arrL,arrT)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    console.log(len);
+    
+    
+    
+    
+    
+    
+    
+    
+  </script>
+  </body>
+</html>
