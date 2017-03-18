@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--<script type="text/javascript" src="../10-13/html/jquery-3.1.1.js" ></script>-->
+		<style>
+			input{
+				width: 500px;
+				height: 30px;
+				padding: 5px;
+				border: 1px solid black;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				width: 510px;
+				list-style: none;
+				border: 1px solid #CDCDCD;
+				display: none;
+			}
+			li a{
+				text-decoration: none;
+				padding: 5px;
+				display: block;
+				color: #000000;
+				font-weight: 700;
+			}
+			li a:hover{
+				background: #CDCDCD;
+			}
+			div{
+				width: 516px;
+				margin:70px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<img src="https://www.baidu.com/img/bd_logo1.png" style="width:270px;height: 129px; margin-left:120px;" />
+			<input type="text" id="q" />
+			<ul id="ul">
+		
+			</ul>
+		</div>
+		<script>
+			
+			/*
+			 https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&json=1&cb=miaov
+			 
+			 https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&json=1&p=3&sid=1452_18195_21125_22036_22074&req=2&csor=1&cb=miaov
+			  */
+			
+			var oQ = document.getElementById('q');
+			var oUl = document.getElementById('ul');
+			
+			function miaov (data) {
+				var oUl = document.getElementById('ul');
+				var html = '';
+				if (data.s.length) {
+					oUl.style.display = 'block';
+					for (var i = 0; i < data.s.length; i++) {
+						html += '<li><a href="https://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=0&rsv_idx=1&tn=baidu&wd='+data.s[i]+'">'+data.s[i]+'</a></li>';
+					}
+					oUl.innerHTML = html;
+				} else{
+					oUl.style.display = 'none';
+				}
+				
+			}
+			
+			oQ.onkeyup = function () {
+				
+				if (this.value !='') {
+					var oScript = document.createElement('script');
+					oScript.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+this.value+'&json=1&p=3&sid=1452_18195_21125_22036_22074&req=2&csor=1&cb=miaov';
+					//oScript.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+this.value+'&sugmode=2&json=1&p=3&sid=1462_21125_18560_22037&req=2&bs=sdff&pbs=sdff&csor=4&pwd=sdff&cb=mioav';
+					document.body.appendChild(oScript);
+					
+				} else{
+					oUl.style.display = 'none';
+				}
+				
+			}
+			
+		</script>
+	</body>
+</html>
