@@ -26,7 +26,7 @@
 				float: left;
 				background: #3385ff;
 				text-decoration: none;
-				border: 1px solid black;
+				border: 1px solid #3385ff;
 			}
 			ul{
 				margin: 0;
@@ -88,7 +88,7 @@
 						html += '<li><a href="https://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=0&rsv_idx=1&tn=baidu&wd='+data.s[i]+'">'+data.s[i]+'</a></li>';
 					}
 					oUl.innerHTML = html;
-				} else{
+				} else{//联想值消失
 					oUl.style.display = 'none';
 				}
 				
@@ -116,7 +116,7 @@
 				if (oQ.value) {
 					btn.href = 'https://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=0&rsv_idx=1&tn=baidu&wd='+oQ.value;
 				}
-				
+				oQ.blur();//点击完后失焦
 			};
 			btn.addEventListener('click',fn);
 			
@@ -124,11 +124,12 @@
 			document.onkeydown = function () {
 				
 				var ev = ev || event;
-				if (ev.keyCode == 13) {
+				if (ev.keyCode == 13 && oQ.value) {//回车键并且有value值
 					console.log(222)
 					window.location.href = 'https://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=0&rsv_idx=1&tn=baidu&wd='+oQ.value;
 
 				}
+				//oQ.blur();//回车完后失焦
 			}
 			
 			//点击document 联想词消失
