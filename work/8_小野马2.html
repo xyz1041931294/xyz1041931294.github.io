@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+<style type="text/css">
+a{
+	padding: 5px;
+}	
+.active{
+	color:red;
+}
+</style>
+</head>
+<body>
+	<div id="page">
+		<!--<a href="javascript:;" class="active">1</a>
+		<a href="javascript:;">2</a>
+		<a href="javascript:;">3</a>-->
+	</div>
+<script src="syema.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	var page = document.getElementById('page');
+	
+	
+	/*
+		now:当前的页数
+		all:总页数
+		len:一页生成多少个
+	*/
+	pageFn({
+		now:1,
+		all:4,
+		len:5,
+		parent:page,
+		callback:function(data){
+			alert(data);
+		}
+	});
+	
+	
+	
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<link href="style/weibo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="nArea">
+<!--留言-->
+     <div class="takeComment">
+        <textarea name="textarea" class="takeTextField" id="tijiaoText"></textarea>
+        <div class="takeSbmComment">
+            <input type="button" id="btn1" class="inputs" value="" />
+            <span>(可按 Enter 回复)</span>
+        </div>
+    </div>
+<!--已留-->
+    <div class="commentOn">
+        <div class="messList" id="div1" style="height:502px">
+        	<!--<div class="reply">
+                <p class="replyContent">卫士，新款卫士将推出总共14种车身式样。其中， XS旅行款车型售价为32295英镑(约33.6万元)。</p>
+                <p class="operation">
+                    <span class="replyTime">2018-09-08 16:37:60</span>
+                    <span class="handle">
+                    	<a href="javascript:;" class="top">0</a>
+                        <a href="javascript:;" class="down_icon">0</a>
+                        <a href="javascript:;" class="cut">删除</a>
+                    </span>
+                </p>
+            </div>-->
+        </div>
+        <div class="page" id="page">
+        	<a href="javascript:;" class="active">1</a>
+        	<a href="javascript:;">2</a>
+        	<a href="javascript:;">3</a>
+        </div>
+    </div>
+</div>
+</body>
+<script src="jquery-3.1.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+  /*
+    weibo.php?act=add&content=xxx	添加一条
+    返回：{error:0, id: 新添加内容的ID, time: 添加时间}
+   */
+  	
+  	
+  	class WebOo {
+  		constructor(){
+  			this.btn = $('#btn1');
+  			this.txt = $('#tijiaoText');
+  			this.box = $('#div1');
+  			this.num = 1;
+  			
+  		}
+  		
+  		init(){
+  			const _this = this;
+  			this.btn.on('click',function(){
+  				//当点击时候拿到用户输入的文本。
+  				_this.addDiv(_this.txt.val());
+  			});
+  			
+  			/*
+		  		ctrl + 回车 
+		  	*/
+  			this.txt.on('keydown',function(ev){
+  				if(ev.keyCode == 13 && ev.ctrlKey){
+  					_this.addDiv(_this.txt.val());
+  				}
+  			});
+  			
+  			
+  			/*
+  				请求一页数据
+  				weibo.php?act=get&page=2		获取一页数据
+				返回：[{id: ID, content: "内容", time: 时间戳, acc: 顶次数, ref: 踩次数}, {...}, ...]
+  				
+  			*/
+    		this.pageload(this.num);
+  		}
+  		
+  		pageload(num){//当页面刷新的时候，调用某组数据
+  			const _this = this;
+  			$.ajax({
+  				url:'weibo.php',
+  				data:{
+  					act:'get',
+  					page:num
+  				},
+  				success:function(data){
+  					_this.box.html('');
+  					const arr = eval('('+data+')');
+					arr.reverse();//降序的数组。
+  					$.each(arr,function(i,e){
+  						_this.createView(e);
+  					});
+  				}
+  			});
+  		}
+  		
+  		//发送请求，保存数据，渲染页面
+  		addDiv(val){
+  			const _this = this;
+  			$.ajax({
+		      url:'weibo.php',
+		      data:{
+		        act:'add',
+		        content:val
+		      },
+		      success:function(data){
+					data = eval('('+data+')');
+			        if(!data.error){
+			        	_this.pageload(_this.num);//还会变
+			        }
+			    }
+	   		});
+  		}
+  		//显示的模板
+  		createView(json){
+//			console.log(json)
+  			let str = this.addTime(json.time);
+  			this.box.prepend($(`
+	            <div class="reply">
+	                <p class="replyContent">${json.content}</p>
+	                <p class="operation">
+	                    <span class="replyTime">${str}</span>
+	                    <span class="handle">
+	                      <a href="javascript:;" class="top">0</a>
+	                        <a href="javascript:;" class="down_icon">0</a>
+	                        <a href="javascript:;" class="cut">删除</a>
+	                    </span>
+	                </p>
+	            </div>
+	          `));
+	          this.txt.val('');
+  		}
+  		
+  		//获取时间
+  		addTime(time){
+  		  var date = new Date(time*1000);//服务器时间是以秒为单位
+          var year = date.getFullYear();
+          var Month = date.getMonth()+1;
+          var d = date.getDate();
+          var sen = date.getSeconds();
+          var min = date.getMinutes();
+          var Hou = date.getHours();
+          var str = year+'-'+tDou(Month)+'-'+tDou(d)+' '+tDou(Hou)+':'+tDou(min)+':'+tDou(sen);
+          function tDou(n){
+            return n<10?'0'+n:''+n;
+          }
+          
+          return str;
+  		}
+  		
+  		
+  		
+  	}
+
+  	var web = new WebOo();
+	web.init();
+  	
+  	
+  
+//	$('#btn1').click(function(){
+	    
+//});
+  
+  
+  		
+</script>
+</html>
